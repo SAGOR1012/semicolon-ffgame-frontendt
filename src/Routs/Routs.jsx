@@ -7,6 +7,7 @@ import Home from "../Pages/Home/Home";
 import DailyMatchCard from "../Components/GameTypeCard/DailyMatchCard/DailyMatchCard";
 import Error404 from "../pages/Error/Error404";
 import Users from "../pages/Users/Users";
+import AddMony from "../pages/AddMony/AddMony";
 
 export const router = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
             {
                 path: "/users",
                 element: <Users></Users>
+            },
+            {
+                path: "/users/addmony",
+                element: <AddMony></AddMony>
             }
         ]
     },
