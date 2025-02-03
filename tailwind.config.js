@@ -5,9 +5,11 @@ export default {
     extend: {
       colors: {
         // Add or override colors here
-        primary: '#4A90E2',
-        secondary: '#FFA500',
+        primary: '#0b1234',
+        secondary: '#0284c7',
+        pragraph: '#64748b',
       },
+
       backgroundImage: {
         'primary-bg-image': 'linear-gradient(to bottom, #0a0f2c, #0d1a4d)',
         'secondary-bg-image':

@@ -1,14 +1,15 @@
 import { TbCoinTaka } from "react-icons/tb";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
     const navOptions = <>
 
 
         <div className="md:flex flex-col lg:flex-row uppercase font-semibold items-center">
-            <li><a>Home</a></li>
-            <li><a>All Match</a></li>
-            <li className="hidden lg:flex">
-                <a href=""><i className="text-4xl text-orange-500"><TbCoinTaka /></i></a>
+            <li><Link to='/'>Home</Link></li>
+            <li><Link to="/classicmatch">All Match</Link></li>
+            <li className="hidden lg:flex ">
+                <Link to='/addmoney' className=" border ">00 <span className=" text-orange-500 text-2xl"><TbCoinTaka></TbCoinTaka></span></Link>
             </li>
             <li className=""><a>Log in</a></li>
         </div>
@@ -46,8 +47,8 @@ const Navbar = () => {
 
             </div>
             {/* Takar icon */ }
-            <div className="lg:hidden">
-                <a href=""><i className="text-4xl text-orange-500"><TbCoinTaka /></i></a>
+            <div className="lg:hidden ">
+                <Link className=" border rounded-sm flex gap-2 p-2 ">00 <span className=" text-orange-500 text-2xl"><TbCoinTaka></TbCoinTaka></span></Link>
 
             </div>
 
