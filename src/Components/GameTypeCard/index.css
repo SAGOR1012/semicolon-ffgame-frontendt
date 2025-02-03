@@ -1,0 +1,18 @@
+@keyframes border-gradient {
+  0% {
+    border-color: #ff0000; /* Starting color */
+  }
+  33% {
+    border-color: #00ff00; /* Mid-point color */
+  }
+  66% {
+    border-color: #0000ff; /* Ending color */
+  }
+  100% {
+    border-color: #ff0000; /* Loop back to starting color */
+  }
+}
+
+.animate-border-gradient {
+  animation: border-gradient 4s infinite linear;
+}
