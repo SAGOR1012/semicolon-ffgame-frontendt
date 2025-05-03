@@ -28,7 +28,7 @@ const PricePoolCard = () => {
                     🔥 Per Kill : 10 Taka
                 </li>
                 <li>
-                    🏆 Total Prize Pool: 800 Taka
+                    🏆 Total Prize : 800 Taka
                 </li>
 
             </ul>

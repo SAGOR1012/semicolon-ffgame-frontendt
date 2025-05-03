@@ -10,3 +10,13 @@ Currently, two official plugins are available:
   ----swiper----
 
 1. swiper js ( use for making hero section)
+   ---------sweet alert------
+1. use fancy alert
+   -----React Hook Form -----
+1. use login & sign up input form
+   -------React helmet ----
+1. use for current page name in tab section
+   ------Firebase-----
+1. Authentication (login/signup)
+   ------Axios -----
+1.

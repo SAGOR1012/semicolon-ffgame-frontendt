@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import bkash from "../../assets/bkash.webp";
 import nogod from "../../assets/nogot.png";
+import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const AddMony = () => {
     const [amount, setAmount] = useState("");
@@ -29,8 +31,15 @@ const AddMony = () => {
 
         // Clear errors and handle successful submission
         setError("");
-        console.log("Form submitted:", { amount, number, method });
-        alert("Form submitted successfully!");
+        // console.log("Form submitted:", { amount, number, method });
+        // alert("Form submitted successfully!");
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "অ্যাড মানি রিকোয়েস্ট সফল হয়েছে",
+            showConfirmButton: false,
+            timer: 1500
+        });
 
         // Reset fields after submission
         setAmount("");
@@ -40,6 +49,9 @@ const AddMony = () => {
 
     return (
         <div className="pt-28 bg-primary-bg-image flex justify-center ">
+            <Helmet>
+                <title>semicolonff | Add Money</title>
+            </Helmet>
             <div className="flex flex-col max-w-md p-2 sm:p-10 bg-white">
                 {/* Bkash and Nogod Section */ }
                 <div className="mb-2 text-center flex flex-col gap-2">
@@ -88,7 +100,7 @@ const AddMony = () => {
                                 id="number"
                                 value={ number }
                                 onChange={ (e) => setNumber(e.target.value) }
-                                placeholder="আপনার বিকাশ, অথবা নগদের নাম্বার"
+                                placeholder="আপনার বিকাশ অথবা নগদের নাম্বার"
                                 className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800"
                             />
                         </div>
@@ -102,7 +114,7 @@ const AddMony = () => {
                                     id="bkash_radio"
                                     value="Bkash"
                                     checked={ method === "Bkash" }
-                                    onChange={ (e) => setMethod(e.target.value) }
+                                    onChange={ (e) => setMethod(e.target.value) } // type korar sathe sathe value tule ney tahole r refresh dewa lage na kichu vul hole
                                     className="mr-2"
                                 />
                                 <label htmlFor="bkash_radio" className="flex items-center gap-2">
@@ -135,15 +147,22 @@ const AddMony = () => {
                     <div className="space-y-2">
                         <button
                             type="submit"
-                            className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50"
+                            className="w-full px-8 py-3 font-semibold rounded-md bg-green-500 text-white"
                         >
                             Add Mony
                         </button>
-                        <p className="px-6 text-sm text-center text-error font-semibold">
-                            Add Mony তে ক্লিক করার পূর্বে টাকা সেন্ড করতে হবে |
-                        </p>
+
+                        {/* <p className="px-6 text-sm text-center text-blue-700 font-semibold mt-10">
+                            অ্যাড মানিতে সমস্যা হলে সাপোর্টে যোগাযোগ করুন
+                            <button className="btn">Contact</button>
+                        </p> */}
                     </div>
                 </form>
+                <div className="mt-5">
+                    <p className="px-6 text-sm text-center text-error font-semibold">
+                        Add Mony তে ক্লিক করার পূর্বে টাকা সেন্ড করতে হবে |
+                    </p>
+                </div>
             </div>
         </div>
     );
