@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import UseAuth from '../../Hooks/UseAuth';
 import UseAxiosPublic from '../../Hooks/UseAxiosPublic';
+import { updateProfile } from 'firebase/auth'; // ⬅️ Import this
 
 const SignUp = () => {
   const { createUser } = UseAuth(); // Custom hook to handle user authentication
@@ -22,42 +23,47 @@ const SignUp = () => {
     // Create a new user with email and password
     createUser(data.email, data.password)
       .then((userCredential) => {
-        const user = userCredential.user; // Newly created user
-        console.log('Newly created user:', user);
+        const user = userCredential.user;
 
-        // Prepare user data to save in the database
-        const userData = {
-          name: data.name,
-          phone: data.phone,
-          email: data.email,
-          password: data.password,
-          role: 'user', // Set default role as "user"
-        };
+        // Step 1: Update profile with displayName
+        return updateProfile(user, {
+          displayName: data.name,
+        })
+          .then(() => {
+            // Step 2: Refresh the user data to make displayName available
+            return auth.currentUser.reload();
+          })
+          .then(() => {
+            // Step 3: Save user to database
+            const userData = {
+              name: data.name,
+              phone: data.phone,
+              email: data.email,
+              password: data.password, // For security, consider not storing password as plain text
+              role: 'user',
+            };
 
-        // Save user data to the database
-        axiosPublic.post('/users', userData).then((response) => {
-          if (response.data.insertedId) {
-            console.log('User data saved successfully:', response.data);
-            // Show success message
-            Swal.fire({
-              icon: 'success',
-              title: 'সাইন আপ সফল হয়েছে',
-              text: 'হোম পেইজে নিয়ে যাওয়া হচ্ছে...',
-              timer: 1500,
-              showConfirmButton: false,
-            });
-          } else {
-            console.error('Failed to save user data:', response.data);
-          }
-        });
+            return axiosPublic.post('/users', userData);
+          })
+          .then((response) => {
+            if (response.data.insertedId) {
+              // Step 4: Show success message
+              Swal.fire({
+                icon: 'success',
+                title: 'সাইন আপ সফল হয়েছে',
+                text: 'হোম পেইজে নিয়ে যাওয়া হচ্ছে...',
+                timer: 1500,
+                showConfirmButton: false,
+              });
 
-        // Redirect to the home page after a delay
-        setTimeout(() => {
-          navigate('/');
-        }, 1600);
+              // Step 5: Navigate to home after delay
+              setTimeout(() => {
+                navigate('/');
+              }, 1000);
+            }
+          });
       })
       .catch((error) => {
-        // Handle errors during signup
         if (error.code === 'auth/email-already-in-use') {
           Swal.fire({
             title: 'এই ইমেইলটি পূর্বে ব্যবহৃত হয়েছে',

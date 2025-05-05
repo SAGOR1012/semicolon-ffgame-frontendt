@@ -1,13 +1,23 @@
 import { useContext } from 'react';
 import { TbCoinTaka } from 'react-icons/tb';
 import { Link, NavLink } from 'react-router-dom';
-import { AuthContext } from '../../Providers/AuthProvider';
+import UseAuth from '../../Hooks/UseAuth';
+import UseUser from '../../Hooks/UseUser';
+// import UseUser from '../../Hooks/UseUser';
+// import { AuthContext } from '../../Providers/AuthProvider';
 
 const Navbar = () => {
   /* find login  user  */
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = UseAuth();
+  // const { user, logOut } = useContext(AuthContext);
+  // console.log(user);
+  // console.log('userData', userData);
+  // console.log('User Name:', userData?.name);
+  // const [userData] = UseUser();
+  // console.log('userdata', userData);
+  // const { userData } = UseUser();
+  // console.log('userData', userData);
 
-  // for active nav link
   const navLinkClass = ({ isActive }) =>
     isActive ? 'text-sky-500 font-semibold  ' : 'text-gray-700 ';
 
@@ -16,6 +26,7 @@ const Navbar = () => {
       .then(() => {})
       .catch((error) => console.error(error));
   };
+
   const navOptions = (
     <>
       <div className='md:flex flex-col lg:flex-row uppercase font-semibold items-center '>
@@ -103,7 +114,7 @@ const Navbar = () => {
           className=''
           href=''>
           <img
-            className='w-20 h-20'
+            className='w-16 h-16 md:w-20 md:h-20'
             src='https://i.ibb.co.com/GQWM0Fps/main-logo.png'
             alt=''
           />
@@ -111,6 +122,9 @@ const Navbar = () => {
       </div>
       {/* Takar icon */}
       <div className='lg:hidden '>
+        <span className='text-white font-bold mr-2'>
+          {user ? user.displayName : ''}
+        </span>
         <Link
           to='/users'
           className=' border rounded-sm flex gap-2 p-2 '>
