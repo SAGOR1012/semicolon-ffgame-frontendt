@@ -19,4 +19,5 @@ Currently, two official plugins are available:
    ------Firebase-----
 1. Authentication (login/signup)
    ------Axios -----
-1.
+   1.use uiball
+   ------ spinner -----
