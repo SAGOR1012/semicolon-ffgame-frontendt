@@ -20,8 +20,16 @@ const UseUser = () => {
     },
     enabled: !!user?.email, // Only run if user email is available
   });
+  // const { refetch, data: userData = [] } = useQuery({
+  //   queryKey: ['user', user?.email],
+  //   queryFn: async () => {
+  //     const res = await axiosPublic.get(`/user/email=${user.email}`);
+  //     return res.data;
+  //   },
+  // });
 
-  return { userData, isLoading, refetch };
+  return [userData, isLoading, refetch];
+  // return [userData, refetch];
 };
 
 export default UseUser;

@@ -38,7 +38,7 @@ const AuthProvider = ({ children }) => {
     /* on authStateChange sobsomoy watch korte thakbe j kokhn change hocche */
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log('current user ', currentUser);
+      // console.log('current user ', currentUser);
       setLoading(false);
     });
     return () => {

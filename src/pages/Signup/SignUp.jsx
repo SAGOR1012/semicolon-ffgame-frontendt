@@ -3,97 +3,76 @@ import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import UseAuth from '../../Hooks/UseAuth';
 import UseAxiosPublic from '../../Hooks/UseAxiosPublic';
-import { updateProfile } from 'firebase/auth'; // ⬅️ Import this
+import UseAuth from '../../Hooks/UseAuth';
 
 const SignUp = () => {
-  const { createUser } = UseAuth(); // Custom hook to handle user authentication
-  const axiosPublic = UseAxiosPublic(); // Axios instance for public API requests
-  const navigate = useNavigate(); // React Router hook for navigation
+  const { createUser } = UseAuth();
+  const axiosPublic = UseAxiosPublic();
+  const navigate = useNavigate();
 
   const {
-    register, // Register input fields for validation
-    handleSubmit, // Handle form submission
-    formState: { errors }, // Form validation errors
+    register,
+    handleSubmit,
+    formState: { errors },
   } = useForm();
 
-  // Form submission handler
   const onSubmit = (data) => {
-    // Create a new user with email and password
     createUser(data.email, data.password)
       .then((userCredential) => {
-        const user = userCredential.user;
+        // Save user to database
+        const userData = {
+          name: data.name,
+          phone: data.phone,
+          email: data.email,
+          role: 'user',
+          balance: 0, // Set default balance to 00
+        };
 
-        // Step 1: Update profile with displayName
-        return updateProfile(user, {
-          displayName: data.name,
-        })
-          .then(() => {
-            // Step 2: Refresh the user data to make displayName available
-            return auth.currentUser.reload();
-          })
-          .then(() => {
-            // Step 3: Save user to database
-            const userData = {
-              name: data.name,
-              phone: data.phone,
-              email: data.email,
-              password: data.password, // For security, consider not storing password as plain text
-              role: 'user',
-            };
-
-            return axiosPublic.post('/users', userData);
-          })
-          .then((response) => {
-            if (response.data.insertedId) {
-              // Step 4: Show success message
-              Swal.fire({
-                icon: 'success',
-                title: 'সাইন আপ সফল হয়েছে',
-                text: 'হোম পেইজে নিয়ে যাওয়া হচ্ছে...',
-                timer: 1500,
-                showConfirmButton: false,
-              });
-
-              // Step 5: Navigate to home after delay
-              setTimeout(() => {
-                navigate('/');
-              }, 1000);
-            }
+        return axiosPublic.post('/users', userData);
+      })
+      .then((response) => {
+        if (response.data.insertedId) {
+          Swal.fire({
+            icon: 'success',
+            title: 'সাইন আপ সফল হয়েছে',
+            text: 'হোম পেইজে নিয়ে যাওয়া হচ্ছে...',
+            timer: 1500,
+            showConfirmButton: false,
           });
+
+          setTimeout(() => {
+            navigate('/'); // Redirect to home
+          }, 1000);
+        }
       })
       .catch((error) => {
+        console.error('Signup error:', error.code, error.message);
         if (error.code === 'auth/email-already-in-use') {
           Swal.fire({
             title: 'এই ইমেইলটি পূর্বে ব্যবহৃত হয়েছে',
             text: 'দয়া করে অন্য একটি ইমেইল ব্যবহার করুন',
             icon: 'error',
           });
-        } else {
-          console.error('Signup error:', error.code, error.message);
         }
       });
   };
 
   return (
     <div className='flex justify-center bg-primary'>
-      {/* Page Title */}
       <Helmet>
         <title>semicolonff | signUp</title>
       </Helmet>
 
       <div className='w-full max-w-sm p-8 space-y-3 rounded-xl bg-primary-bg-image mt-28'>
-        {/* Page Heading */}
         <h1 className='text-2xl font-bold text-center text-white mb-10'>
           Sign Up
         </h1>
 
-        {/* Signup Form */}
         <form
           onSubmit={handleSubmit(onSubmit)}
           className='mx-auto max-w-xs'>
-          {/* Name input */}
+          {/* Name */}
           <label
             htmlFor='name'
             className='block text-white mb-1'>
@@ -101,7 +80,6 @@ const SignUp = () => {
           </label>
           <input
             name='name'
-            className='w-full px-8 py-2 rounded-md font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-green focus:bg-white'
             {...register('name', {
               required: 'নাম আবশ্যক',
               minLength: {
@@ -109,6 +87,7 @@ const SignUp = () => {
                 message: 'নাম কমপক্ষে ৩ অক্ষরের হতে হবে',
               },
             })}
+            className='w-full px-8 py-2 rounded-md font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-green focus:bg-white'
             type='text'
             placeholder='Your Name'
           />
@@ -116,7 +95,7 @@ const SignUp = () => {
             <p className='text-red-500 text-xs mt-1'>{errors.name.message}</p>
           )}
 
-          {/* Phone number input */}
+          {/* Phone */}
           <label
             htmlFor='phone'
             className='block text-white mb-1'>
@@ -124,7 +103,6 @@ const SignUp = () => {
           </label>
           <input
             name='phone'
-            className='w-full px-8 py-2 rounded-md font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-green focus:bg-white'
             {...register('phone', {
               required: 'ফোন নম্বর আবশ্যক',
               pattern: {
@@ -132,6 +110,7 @@ const SignUp = () => {
                 message: 'ফোন নম্বর অবশ্যই ১১ সংখ্যার হতে হবে',
               },
             })}
+            className='w-full px-8 py-2 rounded-md font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-green focus:bg-white'
             type='text'
             placeholder='01xxxxxxxxx'
           />
@@ -139,7 +118,7 @@ const SignUp = () => {
             <p className='text-red-500 text-xs mt-1'>{errors.phone.message}</p>
           )}
 
-          {/* Email input */}
+          {/* Email */}
           <label
             htmlFor='email'
             className='block text-white mb-1'>
@@ -147,8 +126,8 @@ const SignUp = () => {
           </label>
           <input
             name='email'
-            className='w-full px-8 py-2 rounded-md font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-green focus:bg-white'
             {...register('email', { required: 'ই-মেইল আবশ্যক' })}
+            className='w-full px-8 py-2 rounded-md font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-green focus:bg-white'
             type='email'
             placeholder='Email'
           />
@@ -156,7 +135,7 @@ const SignUp = () => {
             <p className='text-red-500 text-xs mt-1'>{errors.email.message}</p>
           )}
 
-          {/* Password input */}
+          {/* Password */}
           <label
             htmlFor='password'
             className='block text-white mb-1'>
@@ -164,7 +143,6 @@ const SignUp = () => {
           </label>
           <input
             name='password'
-            className='w-full px-8 py-2 rounded-md font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-green focus:bg-white'
             {...register('password', {
               required: 'পাসওয়ার্ড আবশ্যক',
               minLength: {
@@ -176,6 +154,7 @@ const SignUp = () => {
                 message: 'পাসওয়ার্ড ১১ অক্ষরের বেশি হওয়া যাবে না',
               },
             })}
+            className='w-full px-8 py-2 rounded-md font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-green focus:bg-white'
             type='text'
             placeholder='Password'
           />
@@ -185,7 +164,7 @@ const SignUp = () => {
             </p>
           )}
 
-          {/* Submit button */}
+          {/* Submit Button */}
           <button className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-2 rounded-md hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'>
             <svg
               className='w-6 h-6 -ml-2'
@@ -206,13 +185,13 @@ const SignUp = () => {
           </button>
         </form>
 
-        {/* Link to login page */}
         <p className='text-xs text-center sm:px-6 text-white'>
           আগে থেকেই একাউন্ট আছে ?
           <Link
             to='/login'
             className='text-orange-600'>
-            লগইন করুন
+            {' '}
+            লগইন করুন{' '}
           </Link>
         </p>
       </div>
