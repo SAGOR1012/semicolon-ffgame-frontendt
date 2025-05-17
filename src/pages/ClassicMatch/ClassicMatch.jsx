@@ -4,6 +4,8 @@ import { LiaTrophySolid } from 'react-icons/lia';
 import UseAllClassicMatchFF from '../../Hooks/UseAllClassicMatchFF';
 import PricePoolCard from '../../Components/PricePoolCard/PricePoolCard';
 import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
+import './index.css'; // Import custom styles
+import ClassicFFRules from '../../Components/ClassicFFRules/ClassicFFRules';
 
 const ClassicMatch = () => {
   const [allFF_ClassicMatch, isLoading, refetch] = UseAllClassicMatchFF();
@@ -19,7 +21,7 @@ const ClassicMatch = () => {
 
   return (
     <div className=''>
-      <div className='pt-28  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-blue-950 '>
+      <div className='pt-28   grid grid-cols-1  lg:grid-cols-3 gap-2 bg-blue-950  '>
         {/* All FF Classic match card */}
         {allFF_ClassicMatch.map((match) => (
           <div
@@ -28,23 +30,36 @@ const ClassicMatch = () => {
             {/* card body */}
             <div className='p-2'>
               {/* Title */}
-              <div className='flex justify-start gap-5'>
-                {/* img */}
-                <img
-                  className='w-12 h-12 md:w-16 md:h-16 rounded-md'
-                  src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHqEFgxyWL-thi2FRNvLxIYuoGVQfJ0rsmog&s'
-                  alt=''
-                />
-                {/* game type | time | date| id */}
+              <div className=' flex justify-between'>
+                <div className='flex justify-start gap-5'>
+                  {/* img */}
+                  <img
+                    className='w-12 h-12 md:w-16 md:h-16 rounded-md'
+                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHqEFgxyWL-thi2FRNvLxIYuoGVQfJ0rsmog&s'
+                    alt=''
+                  />
+                  {/* game type | time | date| id */}
+                  <div>
+                    <h3 className='font-bold'>
+                      {match.gametype} | {match.version} | #{match._id}
+                    </h3>
+                    {/* time * date */}
+                    <h4 className='text-red-500'>
+                      Time: {match.date} at {match.time}
+                    </h4>
+                    {/* Dynamic date & time */}
+                  </div>
+                </div>
+                {/* Rules btn */}
                 <div>
-                  <h3 className='font-bold'>
-                    {match.gametype} | {match.version} | #{match._id}
-                  </h3>
-                  {/* time * date */}
-                  <h4 className='text-red-500'>
-                    Time: {match.date} at {match.time}
-                  </h4>
-                  {/* Dynamic date & time */}
+                  <button
+                    className='btn btn-xs text-orange-500 bg-orange-50 '
+                    onClick={() =>
+                      document.getElementById('classicFFRulesModal').showModal()
+                    }>
+                    খেলার নিয়ম
+                    <ClassicFFRules rules={match.rules}></ClassicFFRules>
+                  </button>
                 </div>
               </div>
               {/* Body */}

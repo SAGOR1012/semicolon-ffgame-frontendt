@@ -37,7 +37,7 @@ const SignUp = () => {
             icon: 'success',
             title: 'সাইন আপ সফল হয়েছে',
             text: 'হোম পেইজে নিয়ে যাওয়া হচ্ছে...',
-            timer: 1500,
+            timer: 1000,
             showConfirmButton: false,
           });
 

@@ -9,6 +9,8 @@ import UseUser from '../../Hooks/UseUser';
 const Navbar = () => {
   /* find login  user  */
   const { user, logOut } = UseAuth();
+  const [userData] = UseUser();
+
   // const { user, logOut } = useContext(AuthContext);
   // console.log(user);
   // console.log('userData', userData);
@@ -48,7 +50,7 @@ const Navbar = () => {
           <NavLink
             to='/users'
             className={{ navLinkClass }}>
-            00
+            {user ? userData.balance : 'N/A'}
             <span className=' text-orange-500 text-2xl'>
               <TbCoinTaka></TbCoinTaka>
             </span>
@@ -63,6 +65,9 @@ const Navbar = () => {
                 className={navLinkClass}>
                 LogOut
               </button>
+            </li>
+            <li className='hidden lg:flex text-orange-500'>
+              <span>{userData.name}</span>
             </li>
           </>
         ) : (
@@ -122,14 +127,14 @@ const Navbar = () => {
       </div>
       {/* Takar icon */}
       <div className='lg:hidden '>
-        <span className='text-white font-bold mr-2'>
-          {user ? user.displayName : ''}
+        <span className='text-white font-semibold text-sm mr-2'>
+          {user ? userData.name : ''}
         </span>
         <Link
           to='/users'
-          className=' border rounded-sm flex gap-2 p-2 '>
+          className=' border rounded-md flex gap-2 p-2 '>
           {/* balance */}
-          00{' '}
+          {user ? userData.balance : '0'}
           <span className=' text-orange-500 text-2xl'>
             <TbCoinTaka></TbCoinTaka>
           </span>
