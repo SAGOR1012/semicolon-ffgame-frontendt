@@ -6,6 +6,7 @@ import PricePoolCard from '../../Components/PricePoolCard/PricePoolCard';
 import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 import './index.css'; // Import custom styles
 import ClassicFFRules from '../../Components/ClassicFFRules/ClassicFFRules';
+import { Link } from 'react-router-dom';
 
 const ClassicMatch = () => {
   const [allFF_ClassicMatch, isLoading, refetch] = UseAllClassicMatchFF();
@@ -121,15 +122,18 @@ const ClassicMatch = () => {
                 </div>
 
                 {/* join / full button */}
-                <button
-                  className={`p-2 border-2 w-10/12 rounded-md font-bold md:text-sm ${
+                <Link
+                  to='/classicmatch/joinform'
+                  state={{ match }} // 👈 shove the whole card in here
+                  className={`p-2 border-2 w-10/12 rounded-md font-bold md:text-sm text-center ${
                     match.joinslot >= match.maxslot
-                      ? 'border-red-200 text-red-500 cursor-not-allowed'
+                      ? 'border-red-500 text-red-600 cursor-not-allowed'
                       : 'border-secondary text-secondary'
-                  }`}
-                  disabled={match.joinslot >= match.maxslot}>
-                  {match.joinslot >= match.maxslot ? 'Slot Full' : 'Join'}
-                </button>
+                  }`}>
+                  <button disabled={match.joinslot >= match.maxslot}>
+                    {match.joinslot >= match.maxslot ? 'Slot Full' : 'Join'}
+                  </button>
+                </Link>
               </div>
             </div>
 

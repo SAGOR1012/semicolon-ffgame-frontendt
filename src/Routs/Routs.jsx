@@ -10,6 +10,7 @@ import Login from '../pages/Login/Login';
 import Withdraw from '../pages/Withdraw/Withdraw';
 import SignUp from '../pages/Signup/SignUp';
 import PrivetRoute from './PrivetRoute';
+import JoinForm from '../Components/JoinForm/JoinForm';
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
             <Withdraw></Withdraw>
           </PrivetRoute>
         ),
+      },
+      {
+        path: '/classicmatch/joinform',
+        element: <JoinForm></JoinForm>,
       },
       {
         path: '/login',
