@@ -1,13 +1,17 @@
 import { useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import UseAuth from '../../Hooks/UseAuth';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const { signIn } = UseAuth();
   const navigate = useNavigate(); // login korar por onno location a automatically niye jabe
+  const location = useLocation();
+
+  const from = location.state?.from.pathname || '/';
 
   const {
     register,
@@ -22,16 +26,18 @@ const Login = () => {
         console.log(user);
 
         // Success alert
-        Swal.fire({
-          title: 'Login successful',
-          icon: 'success',
-          draggable: true,
-          timer: 1500,
-          showConfirmButton: false,
-        });
+        // Swal.fire({
+        //   title: 'Login successful',
+        //   icon: 'success',
+        //   draggable: true,
+        //   timer: 1500,
+        //   showConfirmButton: false,
+        // });
+        toast.success('Login successful'); // ✅ toast alert
 
         // Redirect to home page
-        navigate('/');
+        // navigate('/');
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorCode = error.code;

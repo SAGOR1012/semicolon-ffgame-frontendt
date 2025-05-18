@@ -9,6 +9,7 @@ import ClassicMatch from '../pages/ClassicMatch/ClassicMatch';
 import Login from '../pages/Login/Login';
 import Withdraw from '../pages/Withdraw/Withdraw';
 import SignUp from '../pages/Signup/SignUp';
+import PrivetRoute from './PrivetRoute';
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +23,11 @@ export const router = createBrowserRouter([
       },
       {
         path: '/classicmatch',
-        element: <ClassicMatch></ClassicMatch>,
+        element: (
+          <PrivetRoute>
+            <ClassicMatch></ClassicMatch>
+          </PrivetRoute>
+        ),
       },
       {
         path: '/users',
@@ -30,11 +35,19 @@ export const router = createBrowserRouter([
       },
       {
         path: '/users/addmony',
-        element: <AddMony></AddMony>,
+        element: (
+          <PrivetRoute>
+            <AddMony></AddMony>
+          </PrivetRoute>
+        ),
       },
       {
         path: '/users/withdraw',
-        element: <Withdraw></Withdraw>,
+        element: (
+          <PrivetRoute>
+            <Withdraw></Withdraw>
+          </PrivetRoute>
+        ),
       },
       {
         path: '/login',

@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import UseAxiosPublic from '../../Hooks/UseAxiosPublic';
 import UseAuth from '../../Hooks/UseAuth';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
   const { createUser } = UseAuth();
@@ -33,17 +34,18 @@ const SignUp = () => {
       })
       .then((response) => {
         if (response.data.insertedId) {
-          Swal.fire({
-            icon: 'success',
-            title: 'সাইন আপ সফল হয়েছে',
-            text: 'হোম পেইজে নিয়ে যাওয়া হচ্ছে...',
-            timer: 1000,
-            showConfirmButton: false,
-          });
+          // Swal.fire({
+          //   icon: 'success',
+          //   title: 'সাইন আপ সফল হয়েছে',
+          //   text: 'হোম পেইজে নিয়ে যাওয়া হচ্ছে...',
+          //   timer: 1000,
+          //   showConfirmButton: false,
+          // });
+          toast.success('সাইন আপ সফল হয়েছে'); // ✅ toast alert
 
           setTimeout(() => {
             navigate('/'); // Redirect to home
-          }, 1000);
+          }, 500);
         }
       })
       .catch((error) => {

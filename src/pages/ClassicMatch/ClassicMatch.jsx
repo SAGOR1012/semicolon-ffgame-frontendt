@@ -97,28 +97,42 @@ const ClassicMatch = () => {
               </div>
             </div>
             {/* footer */}
+            {/* footer */}
             <div className='p-2'>
-              {/* progress bar */}
               <div className='flex justify-between gap-2'>
+                {/* progress + numbers */}
                 <div className='flex flex-col gap-3 w-full'>
+                  {/* progress bar */}
                   <progress
                     className='progress h-1 progress-warning rounded-none'
-                    value={match.totalslot}
-                    max='100'></progress>
+                    value={match.joinslot} // filled seats
+                    max={match.maxslot} // total seats
+                  />
+
+                  {/* numbers */}
                   <div className='text-pragraph flex justify-between'>
                     <p className='text-xs md:text-sm font-semibold'>
-                      Only 16 spots left
+                      {Math.max(match.maxslot - match.joinslot, 0)} spots left
                     </p>
-                    <p className='font-semibold'>32/{match.totalslot}</p>
+                    <p className='font-semibold'>
+                      {match.joinslot}/{match.maxslot}
+                    </p>
                   </div>
                 </div>
-                <button className='p-2 border-2 w-10/12 rounded-md border-secondary text-secondary font-bold md:text-sm'>
-                  Join
+
+                {/* join / full button */}
+                <button
+                  className={`p-2 border-2 w-10/12 rounded-md font-bold md:text-sm ${
+                    match.joinslot >= match.maxslot
+                      ? 'border-red-200 text-red-500 cursor-not-allowed'
+                      : 'border-secondary text-secondary'
+                  }`}
+                  disabled={match.joinslot >= match.maxslot}>
+                  {match.joinslot >= match.maxslot ? 'Slot Full' : 'Join'}
                 </button>
-                {/* If full, show registration closed button instead */}
-                {/* <button className="p-2 border-2 w-10/12 rounded-md border-red-500 text-red-500 font-bold md:text-sm">Registration Closed</button> */}
               </div>
             </div>
+
             <div className='flex p-2'>
               {/* room details */}
               <div className='dropdown dropdown-bottom border w-full'>

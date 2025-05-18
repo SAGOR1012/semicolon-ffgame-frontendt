@@ -2,11 +2,12 @@
 import { useQuery } from '@tanstack/react-query';
 import UseAxiosPublic from './UseAxiosPublic';
 import UseAuth from './UseAuth';
+import UseAxiosSecure from './UseAxiosSecure';
 
 const UseUser = () => {
   const { user } = UseAuth();
-  // const axiosPublic = UseAxiosPublic();
-  const axiosPublic = UseAxiosPublic(); // Create an instance of axios for public API requests
+  const axiosPublic = UseAxiosPublic();
+  // const axiosSecure = UseAxiosSecure(); // Create an instance of axios for public API requests
 
   const {
     data: userData = {},
