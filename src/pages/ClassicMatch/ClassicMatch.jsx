@@ -6,6 +6,7 @@ import PricePoolCard from '../../Components/PricePoolCard/PricePoolCard';
 import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 import './index.css'; // Import custom styles
 import ClassicFFRules from '../../Components/ClassicFFRules/ClassicFFRules';
+import { formatTime12h } from '../../utils/formatTime12h';
 import { Link } from 'react-router-dom';
 
 const ClassicMatch = () => {
@@ -46,9 +47,9 @@ const ClassicMatch = () => {
                     </h3>
                     {/* time * date */}
                     <h4 className='text-red-500'>
-                      Time: {match.date} at {match.time}
+                      {/* Time: {match.date} at {match.time} */}
+                      Time: {match.date} at {formatTime12h(match.time)}
                     </h4>
-                    {/* Dynamic date & time */}
                   </div>
                 </div>
                 {/* Rules btn */}

@@ -23,7 +23,7 @@ const JoinForm = () => {
   const { _id, gametype, version, date, time, totalPrice, entryfee } =
     state.match;
 
-  /* RHF */
+  /* react hook form  */
   const {
     control,
     handleSubmit,
@@ -69,7 +69,7 @@ const JoinForm = () => {
 
     try {
       /* ১️⃣ join */
-      await axiosPublic.post('/duo-entry', payload);
+      await axiosPublic.post('/booking_player_list', payload);
 
       /* ২️⃣ balance কমাতে  */
       await axiosPublic.patch(`/users/${userData._id}`, {
@@ -228,7 +228,7 @@ export default JoinForm;
 
 //     try {
 //       /* ১️⃣ join */
-//       await axiosPublic.post('/duo-entry', payload);
+//       await axiosPublic.post('/booking_player_list', payload);
 
 //       /* ২️⃣ balance কমাতে  */
 //       await axiosPublic.patch(`/users/${userData._id}`, {

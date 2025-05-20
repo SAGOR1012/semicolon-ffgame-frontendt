@@ -11,6 +11,7 @@ import Withdraw from '../pages/Withdraw/Withdraw';
 import SignUp from '../pages/Signup/SignUp';
 import PrivetRoute from './PrivetRoute';
 import JoinForm from '../Components/JoinForm/JoinForm';
+import PendingAddMoney from '../Components/PendignRequest/PendingAddMoney';
 
 export const router = createBrowserRouter([
   {
@@ -24,11 +25,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/classicmatch',
-        element: (
-          <PrivetRoute>
-            <ClassicMatch></ClassicMatch>
-          </PrivetRoute>
-        ),
+        element: <ClassicMatch></ClassicMatch>,
       },
       {
         path: '/users',
@@ -50,9 +47,21 @@ export const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },
+      // {
+      //   path: '/add_money_request',
+      //   element: (
+      //     <PrivetRoute>
+      //       <PendingAddMoney></PendingAddMoney>
+      //     </PrivetRoute>
+      //   ),
+      // },
       {
         path: '/classicmatch/joinform',
-        element: <JoinForm></JoinForm>,
+        element: (
+          <PrivetRoute>
+            <JoinForm></JoinForm>
+          </PrivetRoute>
+        ),
       },
       {
         path: '/login',
