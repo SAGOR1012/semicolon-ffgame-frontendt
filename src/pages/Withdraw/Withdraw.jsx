@@ -809,7 +809,7 @@ const Withdraw = () => {
                     },
                     valueAsNumber: true,
                   })}
-                  placeholder='টাকার পরিমাণ লিখুন (e.g., 100)'
+                  placeholder='টাকার পরিমাণ লিখুন '
                   className='w-full px-3 py-2.5 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors'
                 />
                 {errors.amount && (
@@ -824,7 +824,7 @@ const Withdraw = () => {
                 <label
                   htmlFor='number'
                   className='block mb-1.5 text-sm text-gray-700'>
-                  যে নাম্বারে টাকা পাঠাতে চান (আপনার bKash/Nagad নাম্বার)
+                  যে নাম্বারে টাকা পাঠাতে চান (bKash/Nagad)
                 </label>
                 <input
                   type='text'
@@ -906,6 +906,7 @@ const Withdraw = () => {
 
             {/* Submit */}
             <div className='pt-4'>
+              {' '}
               <button
                 type='submit'
                 disabled={isLoading && !userData} // Disable if initial data is loading

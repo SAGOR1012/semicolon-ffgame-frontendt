@@ -40,10 +40,11 @@ const ClassicMatch = () => {
                     src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHqEFgxyWL-thi2FRNvLxIYuoGVQfJ0rsmog&s'
                     alt=''
                   />
-                  {/* game type | time | date| id */}
+                  {/* game type | time | date| custom match id */}
                   <div>
                     <h3 className='font-bold'>
-                      {match.gametype} | {match.version} | #{match._id}
+                      {match.gametype} | {match.version} | #
+                      {match.customMatchId}
                     </h3>
                     {/* time * date */}
                     <h4 className='text-red-500'>
